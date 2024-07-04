@@ -36,9 +36,9 @@ public class UserController {
         return "/user/login";
     }
     @PostMapping("/login")
-    public String postLogin(@RequestParam String id, @RequestParam String password, HttpSession session, Model model){
+    public String postLogin(UserDto userDto, HttpSession session, Model model){
         log.info("post login");
-        boolean login = userService.login(id, password, session);
+        boolean login = userService.login(userDto, session);
         if (login) {
             return "/index";
         }else {
@@ -48,7 +48,7 @@ public class UserController {
     }
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.removeAttribute("userId"); // 세션에서 사용자 ID 제거
+        session.removeAttribute("user"); // 세션에서 사용자 ID 제거
         return "redirect:/login"; // 로그아웃 후 로그인 페이지로 리다이렉트
     }
 }

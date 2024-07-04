@@ -20,14 +20,14 @@ public class UserService {
         userRepositoy.save(user);
     }
 
-    public boolean login(String id, String password, HttpSession session) {
-        Optional<User> userOptional = userRepositoy.findById(id);
+    public boolean login(UserDto userDto, HttpSession session) {
+        Optional<User> userOptional = userRepositoy.findById(userDto.getId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             String Db_id = user.getId();
             String Db_password = user.getPassword();
-            if (id.equals(Db_id) && password.equals(Db_password)) {
-                session.setAttribute("userId", id);
+            if (userDto.getId().equals(Db_id) && userDto.getPassword().equals(Db_password)) {
+                session.setAttribute("user", user);
                 return true;
             } else {
                 return false;
